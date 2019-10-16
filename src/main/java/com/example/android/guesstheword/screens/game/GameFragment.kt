@@ -60,9 +60,10 @@ class GameFragment : Fragment() {
         viewModel.eventGameFinish.observe(this, Observer<Boolean> { hasFinished ->
             if (hasFinished) gameFinished()
         })
-        binding.endGameButton.setOnClickListener { onEndGame() }
-        binding.correctButton.setOnClickListener { onCorrect() }
-        binding.skipButton.setOnClickListener { onSkip() }
+        binding.gameViewModel = viewModel
+        binding.lifecycleOwner = this
+
+
         updateScoreText()
         updateWordText()
         return binding.root
@@ -73,20 +74,6 @@ class GameFragment : Fragment() {
 
     /** Methods for buttons presses **/
 
-    private fun onSkip() {
-        viewModel.onSkip()
-        updateWordText()
-        updateScoreText()
-    }
-
-    private fun onCorrect() {
-        viewModel.onCorrect()
-        updateScoreText()
-        updateWordText()
-    }
-    private fun onEndGame() {
-        gameFinished()
-    }
 
     private fun gameFinished() {
         Toast.makeText(activity, "Game has just finished", Toast.LENGTH_SHORT).show()
